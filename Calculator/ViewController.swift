@@ -17,7 +17,7 @@ class ViewController: UIViewController {
   
   var currentInput: Double {
     get {
-      return Double(displayResultLabel.text!)!
+      return Double(displayResultLabel.text!) ?? firstOperand
     } set {
       let value = "\(newValue)"
       let valueArray = value.components(separatedBy: ".")
@@ -52,7 +52,11 @@ class ViewController: UIViewController {
   }
   
   func operateWithTowOperands(operation: (Double, Double) -> Double) {
-    currentInput = operation(firstOperand, secondOperand)
+    if secondOperand == 0 && operationSign == "/" {
+      displayResultLabel.text = "Делить на 0 нельзя!"
+    } else {
+      currentInput = operation(firstOperand, secondOperand)
+    }
     stillTyping = false
   }
   
